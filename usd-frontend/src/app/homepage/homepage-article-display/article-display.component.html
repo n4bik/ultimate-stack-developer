@@ -1,0 +1,14 @@
+<div *ngIf="article" class="article-display">
+    <div class="article-display-title">
+        <h1>{{article.title}}</h1>
+        <h3><span class="article-display-date">{{article.publishDate}}</span></h3>
+        <h3>by <span class="article-display-author-name">{{article.authorFullName}}</span></h3>
+    </div>
+    <div class="article-display-summary">
+        {{article.summary}}
+    </div>
+    <div
+            [innerHTML]="article.content"
+            class="article-display-content">
+    </div>
+</div>

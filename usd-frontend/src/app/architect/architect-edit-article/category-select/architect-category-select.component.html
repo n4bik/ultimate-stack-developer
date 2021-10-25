@@ -1,0 +1,16 @@
+<div class="architect-edit-subtitle">$ Selected Categories $</div>
+<div *ngFor="let category of categoriesAssignedToArticle">
+    <p class="architect-edit-link"
+       (click)="removeCategoryFromArticle(category.title)">
+        - {{category.title}}
+    </p>
+</div>
+
+<div class="architect-edit-subtitle">$ Available Categories $</div>
+<div *ngFor="let category of availableCategories">
+    <p class="architect-edit-link"
+       (click)="assignCategoryToArticle(category.title)">
+        + {{category.title}}
+    </p>
+</div>
+

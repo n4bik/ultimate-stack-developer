@@ -1,0 +1,33 @@
+<app-architect-header></app-architect-header>
+<main class="architect-main">
+    <p class="welcome-to-architect-sign">Welcome,
+        <br>
+        please enter credentials below.
+        <br>
+        <br>
+        Thank you.
+    </p>
+    <br>
+    <form class="architect-login-form"
+          [formGroup]="architectLoginForm">
+        <input class="form-input"
+               type="text"
+               id="username"
+               formControlName="username"
+               placeholder="Username">
+        <input class="form-input"
+               type="password"
+               id="password"
+               formControlName="password"
+               placeholder="Password">
+    </form>
+    <div id="invalid-credentials-message"
+         class="error-message">
+        {{invalidCredentialsMessage}}
+    </div>
+    <div class="architect-button-container">
+        <button class="yellow-button yellow-button-reversed"
+                (click)="runLogin()">Press the dark grey button
+        </button>
+    </div>
+</main>

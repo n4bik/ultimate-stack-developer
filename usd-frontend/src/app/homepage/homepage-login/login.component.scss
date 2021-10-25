@@ -1,0 +1,19 @@
+$highlightColor: #fbff3d;
+
+.main-hero-area {
+  width: 280px;
+  height: 360px;
+  display: flex;
+}
+
+.main-hero-content {
+  text-align: center;
+  align-self: center;
+  padding-bottom: 30px;
+  padding-left: 16px;
+}
+
+.main-highlighted-word {
+  font-size: 20px;
+  color: $highlightColor;
+}

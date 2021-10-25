@@ -1,0 +1,81 @@
+<app-architect-header></app-architect-header>
+<div class="architect-breadcrumbs">
+    <a routerLink="//the/architect/dashboard" class="architect-breadcrumb-link">The Architect</a> > <a routerLink="//the/architect/article/list" class="architect-breadcrumb-link">List of all Articles</a> > Edit Article
+</div>
+<main *ngIf="article" class="architect-main">
+    <div class="architect-edit-article">
+        <div class="architect-edit-article-container">
+            <form class="architect-article-form"
+                  [formGroup]="newArticleForm">
+                <app-architect-category-select *ngIf='categoryList' [article]="article"></app-architect-category-select>
+                <label for="article-title"
+                       class="form-label">
+                    $ Article Title $
+                    <textarea class="form-input-textarea"
+                              type="text"
+                              id="article-title"
+                              formControlName="newArticleTitle"
+                              placeholder="{{currentArticleTitle}}"
+                              autosize></textarea>
+                </label>
+                <label for="article-summary"
+                       class="form-label">
+                    $ Article Summary $
+                    <textarea class="form-input-textarea"
+                              id="article-summary"
+                              formControlName="newArticleSummary"
+                              placeholder="{{currentArticleSummary}}"
+                              autosize></textarea>
+                </label>
+                <label for="article-content"
+                       class="form-label">
+                    $ Article Content $
+                    <textarea class="form-input-textarea"
+                              id="article-content"
+                              formControlName="newArticleContent"
+                              placeholder="{{currentArticleContent}}"
+                              autosize></textarea>
+                </label>
+            </form>
+            <div class="architect-article-edit-buttons">
+                <button class="yellow-button yellow-button-reversed"
+                        (click)="saveChangedArticle()">
+                    SAVE
+                </button>
+                <button class="yellow-button yellow-button-reversed"
+                        (click)="runArticlePreview()">
+                    PREVIEW
+                </button>
+            </div>
+        </div>
+        <div [hidden]="isPreviewHidden"
+             class="architect-article-display">
+            <div class="article-display">
+                <div class="article-display-title">
+                    <h1 #articleTitle>Test Title</h1>
+                    <h3>
+                    <span #articleDate
+                          class="article-display-date">
+                    {{article.createDate}}
+                    </span>
+                    </h3>
+                    <h3>
+                        by
+                        <span #authorName
+                              class="article-display-author-name">
+                        Tomasz Buga
+                        </span>
+                    </h3>
+                </div>
+                <div #articleSummary
+                     class="article-display-summary">
+                    Random summary
+                </div>
+                <div #articleContent
+                     class="article-display-content">
+                    Random article conent
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

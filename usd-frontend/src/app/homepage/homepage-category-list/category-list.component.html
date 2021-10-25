@@ -1,0 +1,14 @@
+<app-header></app-header>
+<app-subtitle [subtitleContent]="subtitleContent"></app-subtitle>
+<main>
+    <div *ngIf="categories" class="main-hero-area">
+        <div class="main-hero-content">
+            <app-button *ngFor="let category of categories"
+                        [buttonTitle]="category.title"
+                        [buttonTag]="category.tag"
+                        (click)="navigateToArticlesList(category.id)">
+            </app-button>
+        </div>
+    </div>
+</main>
+<app-footer></app-footer>

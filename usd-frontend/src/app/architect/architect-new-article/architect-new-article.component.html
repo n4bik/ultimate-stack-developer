@@ -1,0 +1,28 @@
+<app-architect-header></app-architect-header>
+<div class="architect-breadcrumbs">
+    <a routerLink="//the/architect/dashboard" class="architect-breadcrumb-link">The Architect</a> > New Article
+</div>
+<main class="architect-main">
+    <div class="architect-edit-article">
+        <div class="architect-edit-article-container">
+            <form class="architect-article-form"
+                  [formGroup]="newArticleForm">
+                <label for="article-title"
+                       class="form-label">
+                    What's the title of the article?
+                    <textarea class="form-input-textarea"
+                              type="text"
+                              id="article-title"
+                              formControlName="newArticleTitle"
+                              autosize></textarea>
+                </label>
+            </form>
+            <div class="architect-article-edit-buttons">
+                <button class="yellow-button yellow-button-reversed"
+                        (click)="createNewArticle()">
+                    LET'S ADD SOME MORE DETAILS
+                </button>
+            </div>
+        </div>
+    </div>
+</main>

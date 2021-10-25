@@ -1,0 +1,20 @@
+<app-architect-header></app-architect-header>
+<div class="architect-breadcrumbs">
+    <a routerLink="//the/architect/dashboard" class="architect-breadcrumb-link">The Architect</a> > List of all Categories
+</div>
+<main class="architect-main">
+    <a class="architect-main-link"
+       routerLink="//the/architect/category/new"
+       style="margin-top: 20px;
+       padding-top: 20px;
+       padding-bottom: 20px;">
+        ADD NEW CATEGORY
+    </a>
+    <div *ngFor="let category of categories">
+        <div class="architect-category-container">
+            <h3>{{category.title}}</h3>
+            <button class="architect-category-link" (click)="navigateToEditCategory(category.id)">EDIT CATEGORY</button>
+            <button class="architect-category-link">DISPLAY ASSIGNED ARTICLES</button>
+        </div>
+    </div>
+</main>

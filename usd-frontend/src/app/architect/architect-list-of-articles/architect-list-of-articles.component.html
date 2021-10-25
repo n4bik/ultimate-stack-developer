@@ -1,0 +1,13 @@
+<app-architect-header></app-architect-header>
+<div class="architect-breadcrumbs">
+    <a routerLink="//the/architect/dashboard" class="architect-breadcrumb-link">The Architect</a> > List of all Articles
+</div>
+<div *ngFor="let article of articleList">
+    <app-article-row class="article-row-container"
+                     [articleAuthor]="article.authorFullName"
+                     [articleTitle]="article.title"
+                     [articleCreateDate]="article.createDate"
+                     [articleId]="article.id"
+                     [badges]="article.categoriesBadgeTags">
+    </app-article-row>
+</div>

@@ -1,0 +1,45 @@
+.article-display-title {
+  h1 {
+    text-align: left;
+    font-size: 60px;
+    font-weight: 700;
+    padding: 0 20px 0 20px;
+  }
+
+  h3 {
+    text-align: left;
+    font-size: 24px;
+    padding: 0 20px 0 20px;
+  }
+}
+
+.article-display-content {
+  font-size: 24px;
+  padding: 0 20px 0 20px;
+  margin-bottom: 40px;
+}
+
+.article-display-summary {
+  text-align: left;
+  font-size: 24px;
+  padding: 0 20px 0 20px;
+}
+
+.architect-article-form {
+  padding: 20px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 12px;
+    font-weight: 400;
+    padding-top: 20px;
+  }
+}
+
+.architect-article-edit-buttons {
+  button {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}

@@ -1,0 +1,39 @@
+<app-architect-header></app-architect-header>
+<div class="architect-breadcrumbs">
+    <a routerLink="//the/architect/dashboard" class="architect-breadcrumb-link">The Architect</a> > <a routerLink="//the/architect/category/list" class="architect-breadcrumb-link">List of all Categories</a> > Edit Category
+</div>
+<main class="architect-main">
+    <div class="architect-edit-article">
+        <div class="architect-edit-article-container">
+            <form class="architect-article-form"
+                  [formGroup]="newCategoryForm">
+                <label for="category-title"
+                       class="form-label">
+                    $ Category Title $
+                    <textarea class="form-input-textarea"
+                              type="text"
+                              id="category-title"
+                              formControlName="newCategoryTitle"
+                              placeholder="{{currentCategoryTitle}}"
+                              autosize></textarea>
+                </label>
+                <label for="category-tag"
+                       class="form-label">
+                    $ Category Tag
+                    (2 characters max) $
+                    <textarea class="form-input-textarea"
+                              id="category-tag"
+                              formControlName="newCategoryTag"
+                              placeholder="{{currentCategoryTag}}"
+                              autosize></textarea>
+                </label>
+            </form>
+            <div class="architect-article-edit-buttons">
+                <button class="yellow-button yellow-button-reversed"
+                        (click)="saveChangedCategory()">
+                    SAVE
+                </button>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,19 @@
+<app-header></app-header>
+<app-subtitle [subtitleContent]="subtitleContent"></app-subtitle>
+<main>
+    <div class="main-hero-area">
+        <div class="main-hero-content">
+            <div *ngFor="let article of articleList">
+                <app-article-row id="article-{{article.id}}"
+                                 class="article-row-container"
+                                 [articleAuthor]="article.authorFullName"
+                                 [articleTitle]="article.title"
+                                 [articleCreateDate]="article.publishDate"
+                                 [articleId]="article.id"
+                                 [badges]="article.categoriesBadgeTags">
+                </app-article-row>
+            </div>
+        </div>
+    </div>
+</main>
+<app-footer></app-footer>

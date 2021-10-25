@@ -1,0 +1,28 @@
+<button class="go-to-article-button" (click)="navigateToArticleDisplay(articleId)">
+    <span class="go-to-article-text">Open<br>Article</span>
+    <img class="go-to-article-icon"
+         src="../../../../assets/icons/go-to-article-button.svg"
+         alt="Icon with an arrow pointing at the text document">
+</button>
+<div class="article-row">
+    <div class="item-upper-section">
+        <div class="article-author">
+            <span class="article-author-content">{{articleAuthor}}</span>
+        </div>
+        <div class="article-create-date">
+            <span class="article-create-date-content">{{articleCreateDate}}</span>
+        </div>
+        <div class="article-title">
+            <span class="article-title-content">{{articleTitle}}</span>
+        </div>
+    </div>
+    <div class="item-lower-section">
+        <div *ngFor="let badge of badges">
+            <app-category-badge
+                    class="badge-tag"
+                    [badgeTag]="badge.categoryTag"
+                    [badgeTitle]="badge.categoryTitle">
+            </app-category-badge>
+        </div>
+    </div>
+</div>

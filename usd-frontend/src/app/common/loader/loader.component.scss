@@ -1,0 +1,30 @@
+.loading-spinner {
+  background-color: #0000001f;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.loading-spinner img {
+  align-self: center;
+}
+
+.loader {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  z-index: 1;
+}
+
+.loader-text {
+  position: absolute;
+  width: 200px;
+  justify-content: center;
+  z-index: 2;
+}
