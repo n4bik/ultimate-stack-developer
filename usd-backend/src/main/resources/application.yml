@@ -1,0 +1,17 @@
+graphql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5431/postgres
+    username: postgres
+    password: b4Dg3r
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8082
