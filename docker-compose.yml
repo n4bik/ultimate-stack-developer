@@ -8,13 +8,13 @@ services:
       - "5431:5432"
     restart: always
     volumes:
-      - ./ultimate-stack-developer-backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_PASSWORD: b4Dg3r
 
   backend:
-    container_name: usb_backend
-    build: ./ultimate-stack-developer-backend/
+    container_name: backend
+    build: backend/
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
     ports:
@@ -22,7 +22,7 @@ services:
     restart: always
 
   frontend:
-    container_name: usd_frontend
-    build: ./ultimate-stack-developer-frontend/
+    container_name: frontend
+    build: frontend/
     ports:
       - "4200:80"
