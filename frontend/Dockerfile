@@ -6,7 +6,7 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY package.json /app
 RUN npm install
-COPY ../frontend-backup /app
+COPY ../frontend /app
 RUN npm run build --prod
 #
 # Front End Package stage
