@@ -2,6 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Article} from '../../common/models/article.model';
 import {DataPreloaderService} from '../../common/data-preloader.service';
 import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
+import {ArticleService} from '../../common/article.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-article-display',
@@ -9,24 +12,50 @@ import {Router} from '@angular/router';
 })
 export class ArticleDisplayComponent implements OnInit, OnDestroy {
     article: Article;
+    articleSubscription: Subscription;
 
     constructor(private router: Router,
-                private dataPreloaderService: DataPreloaderService) {
+                private dataPreloaderService: DataPreloaderService,
+                private cookieService: CookieService,
+                private articleService: ArticleService) {
     }
 
     ngOnInit(): void {
-        if (!this.dataPreloaderService.isLoaded) {
+        if (this.cookieService.get('token') === '') {
             this.router.navigate(['/']);
         }
-        this.initArticle();
+
+        if (!this.articleSubscription) {
+            this.subscribeToSelectedArticleChange();
+        }
+
+        if (!this.dataPreloaderService.isLoaded) {
+            this.dataPreloaderService.loadData()
+                .then(() => {
+                    this.initArticle();
+                });
+        } else {
+            this.initArticle();
+        }
     }
 
     ngOnDestroy() {
         this.article = null;
+        if (this.articleSubscription) {
+            this.articleSubscription.unsubscribe();
+        }
     }
 
-    private initArticle() {
-        this.article = this.dataPreloaderService.getArticleById();
+    private subscribeToSelectedArticleChange() {
+        this.articleSubscription = this.articleService.selectedArticleChange
+            .asObservable()
+            .subscribe((article) => {
+                this.article = article;
+            });
+    }
+
+    private async initArticle() {
+        await this.articleService.getArticleByIdFromUrlParams();
     }
 }
 

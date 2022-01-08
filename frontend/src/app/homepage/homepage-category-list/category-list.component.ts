@@ -3,6 +3,7 @@ import {GraphQLService} from '../../api/graphql.service';
 import {Router} from '@angular/router';
 import {Category} from '../../common/models/category.model';
 import {DataPreloaderService} from '../../common/data-preloader.service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-category-list',
@@ -15,14 +16,19 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
     constructor(private router: Router,
                 private graphqlService: GraphQLService,
-                private dataPreloaderService: DataPreloaderService) {
+                private dataPreloaderService: DataPreloaderService,
+                private cookieService: CookieService) {
     }
 
     ngOnInit(): void {
-        if (!this.dataPreloaderService.isLoaded) {
+        if (this.cookieService.get('token') === '') {
             this.router.navigate(['/']);
         }
-        this.initCategoryList();
+        if (!this.dataPreloaderService.isLoaded) {
+            this.dataPreloaderService.loadData().then(() => this.initCategoryList());
+        } else {
+            this.initCategoryList();
+        }
     }
 
     ngOnDestroy(): void {

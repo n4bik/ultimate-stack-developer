@@ -12,17 +12,12 @@ export class LoginService {
 
     // for production server use: private backendUrl = 'ultimatestackdeveloper.herokuapp.com';
     // for local server use: private backendUrl = 'localhost:8082';
-    private backendUrl = 'localhost:8082'
+    private backendUrl = 'localhost:8082';
 
-    constructor(private httpClient: HttpClient,
-                private cookieService: CookieService) {
+    constructor(private httpClient: HttpClient) {
     }
 
     public generateToken(username: string, password: string) {
-        if (this.cookieService.get('token') !== null) {
-            this.cookieService.delete('token');
-        }
-
         const headerDictionary = {
             'Content-Type': 'application/json',
         };

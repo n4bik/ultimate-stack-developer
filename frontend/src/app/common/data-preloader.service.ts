@@ -11,6 +11,10 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class DataPreloaderService {
     isLoaded = false;
+    article: Article;
+    articleSubscription: Subscription;
+    articleChange = new Subject<Article>();
+
     articleList = new Array<Article>();
     articleListSubscription: Subscription;
     articleListChange = new Subject<Array<Article>>();
@@ -32,6 +36,7 @@ export class DataPreloaderService {
     }
 
     private setSubscriptions() {
+        this.subscribeToArticleChange();
         this.subscribeToArticleListChange();
         this.subscribeToCategoryListChange();
     }
@@ -51,6 +56,15 @@ export class DataPreloaderService {
             .subscribe((categoryList) => {
                 this.categoryList = categoryList;
                 this.categoryListChange.next(this.categoryList);
+            });
+    }
+
+    private subscribeToArticleChange() {
+        this.articleSubscription = this.articleService.selectedArticleChange
+            .asObservable()
+            .subscribe((article) => {
+                this.article = article;
+                this.articleChange.next(this.article);
             });
     }
 
