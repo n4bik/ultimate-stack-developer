@@ -21,21 +21,26 @@ export class ArticleDisplayComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        if (this.cookieService.get('token') === '') {
+        const tokenCookie = this.cookieService.get('token');
+        const tokenExpectedCharCount = 179;
+
+        if (tokenCookie === '' || tokenCookie.length !== tokenExpectedCharCount) {
             this.router.navigate(['/']);
-        }
-
-        if (!this.articleSubscription) {
-            this.subscribeToSelectedArticleChange();
-        }
-
-        if (!this.dataPreloaderService.isLoaded) {
-            this.dataPreloaderService.loadData()
-                .then(() => {
-                    this.initArticle();
-                });
         } else {
-            this.initArticle();
+            if (!this.articleSubscription) {
+                this.subscribeToSelectedArticleChange();
+            }
+
+            if (!this.dataPreloaderService.isLoaded) {
+                this.dataPreloaderService.loadData()
+                    .then(() => {
+                        this.initArticle();
+                    }).catch(() => {
+                    this.router.navigate(['/']);
+                });
+            } else {
+                this.initArticle();
+            }
         }
     }
 
