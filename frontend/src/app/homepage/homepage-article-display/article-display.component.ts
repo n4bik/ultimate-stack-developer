@@ -2,9 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Article} from '../../common/models/article.model';
 import {DataPreloaderService} from '../../common/data-preloader.service';
 import {Router} from '@angular/router';
-import {CookieService} from 'ngx-cookie-service';
 import {ArticleService} from '../../common/article.service';
 import {Subscription} from 'rxjs';
+import {TokenService} from '../../common/token.service';
 
 @Component({
     selector: 'app-article-display',
@@ -16,31 +16,22 @@ export class ArticleDisplayComponent implements OnInit, OnDestroy {
 
     constructor(private router: Router,
                 private dataPreloaderService: DataPreloaderService,
-                private cookieService: CookieService,
-                private articleService: ArticleService) {
+                private articleService: ArticleService,
+                private tokenService: TokenService) {
     }
 
     ngOnInit(): void {
-        const tokenCookie = this.cookieService.get('token');
-        const tokenExpectedCharCount = 179;
-
-        if (tokenCookie === '' || tokenCookie.length !== tokenExpectedCharCount) {
-            this.router.navigate(['/']);
-        } else {
+        if (this.tokenService.isTokenValid()) {
             if (!this.articleSubscription) {
                 this.subscribeToSelectedArticleChange();
             }
-
             if (!this.dataPreloaderService.isLoaded) {
-                this.dataPreloaderService.loadData()
-                    .then(() => {
-                        this.initArticle();
-                    }).catch(() => {
-                    this.router.navigate(['/']);
-                });
+                this.dataPreloaderService.loadData().then(() => this.initArticle());
             } else {
                 this.initArticle();
             }
+        } else {
+            this.router.navigate(['/']);
         }
     }
 
