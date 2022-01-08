@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {Category} from '../../common/models/category.model';
 import {DataPreloaderService} from '../../common/data-preloader.service';
 import {TokenService} from '../../common/token.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-category-list',
@@ -12,6 +13,7 @@ import {TokenService} from '../../common/token.service';
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
     categories: Array<Category>;
+    categoryListSubscription: Subscription;
     subtitleContent = 'Please select category';
 
     constructor(private router: Router,
@@ -22,8 +24,13 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         if (this.tokenService.isTokenValid()) {
+            if (!this.categoryListSubscription) {
+                this.subscribeToCategoryListChange();
+            }
             if (!this.dataPreloaderService.isLoaded) {
-                this.dataPreloaderService.loadData().then(() => this.initCategoryList());
+                this.dataPreloaderService
+                    .loadData()
+                    .then(() => this.initCategoryList());
             } else {
                 this.initCategoryList();
             }
@@ -34,6 +41,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.categories = [];
+        if (this.categoryListSubscription) {
+            this.categoryListSubscription.unsubscribe();
+        }
     }
 
     navigateToArticlesList(id: number) {
@@ -42,5 +52,13 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
     private initCategoryList() {
         this.categories = this.dataPreloaderService.categoryList;
+    }
+
+    private subscribeToCategoryListChange() {
+        this.categoryListSubscription = this.dataPreloaderService.categoryListChange
+            .asObservable()
+            .subscribe((categories) => {
+                this.categories = categories;
+            });
     }
 }

@@ -22,7 +22,9 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         if (this.tokenService.isTokenValid()) {
             if (!this.dataPreloaderService.isLoaded) {
-                this.dataPreloaderService.loadData().then(() => this.initArticleList());
+                this.dataPreloaderService
+                    .loadData()
+                    .then(() => this.initArticleList());
             } else {
                 this.initArticleList();
             }
@@ -36,6 +38,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     }
 
     private initArticleList() {
-        this.articleList = this.articleService.getArticlesByCategoryId();
+        this.articleList = this.dataPreloaderService.getArticlesByCategoryId();
     }
+
 }

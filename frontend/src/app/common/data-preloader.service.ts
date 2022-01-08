@@ -11,6 +11,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class DataPreloaderService {
     isLoaded = false;
+
     article: Article;
     articleSubscription: Subscription;
     articleChange = new Subject<Article>();
@@ -68,32 +69,39 @@ export class DataPreloaderService {
             });
     }
 
-    getArticlesByCategoryId() {
-        const articlesWithSelectedCategory = new Array<Article>();
+    public getArticlesByCategoryId() {
+        let articlesWithSelectedCategory = new Array<Article>();
 
-        this.route.queryParams.subscribe((params) => {
-            this.articleList.forEach((article) => {
-                article.categories.forEach((category) => {
-                    if (category.id === params.categoryId) {
-                        articlesWithSelectedCategory.push(article);
-                    }
+        if (this.articleList.length === 0) {
+            articlesWithSelectedCategory = this.articleService.getArticlesByCategoryId();
+        } else {
+            this.route.queryParams.subscribe((params) => {
+                this.articleList.forEach((article) => {
+                    article.categories.forEach((category) => {
+                        if (category.id === params.categoryId) {
+                            articlesWithSelectedCategory.push(article);
+                        }
+                    });
                 });
-            });
-        }).unsubscribe();
+            }).unsubscribe();
+        }
 
         return articlesWithSelectedCategory;
     }
 
-    getArticleById() {
-        let foundArticle;
-        this.route.queryParams.subscribe((params) => {
-            this.articleList.forEach((article) => {
-                if (article.id === params.articleId) {
-                    foundArticle = article;
-                }
-            });
-        }).unsubscribe();
-
-        return foundArticle;
+    public getArticleDetailsByArticleId() {
+        if (this.articleList.length === 0) {
+            this.article = this.articleService.getArticleByIdFromUrlParams();
+        } else {
+            this.route.queryParams.subscribe((params) => {
+                this.articleList.forEach((article) => {
+                    if (article.id === params.articleId) {
+                        this.article = article;
+                    }
+                });
+            }).unsubscribe();
+        }
+        this.articleChange.next(this.article);
     }
+
 }

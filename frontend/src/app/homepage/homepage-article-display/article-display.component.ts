@@ -3,8 +3,8 @@ import {Article} from '../../common/models/article.model';
 import {DataPreloaderService} from '../../common/data-preloader.service';
 import {Router} from '@angular/router';
 import {ArticleService} from '../../common/article.service';
-import {Subscription} from 'rxjs';
 import {TokenService} from '../../common/token.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-article-display',
@@ -23,10 +23,12 @@ export class ArticleDisplayComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         if (this.tokenService.isTokenValid()) {
             if (!this.articleSubscription) {
-                this.subscribeToSelectedArticleChange();
+                this.subscribeToArticleChange();
             }
             if (!this.dataPreloaderService.isLoaded) {
-                this.dataPreloaderService.loadData().then(() => this.initArticle());
+                this.dataPreloaderService
+                    .loadData()
+                    .then(() => this.initArticle());
             } else {
                 this.initArticle();
             }
@@ -42,16 +44,16 @@ export class ArticleDisplayComponent implements OnInit, OnDestroy {
         }
     }
 
-    private subscribeToSelectedArticleChange() {
-        this.articleSubscription = this.articleService.selectedArticleChange
+    private initArticle() {
+        this.dataPreloaderService.getArticleDetailsByArticleId();
+    }
+
+    private subscribeToArticleChange() {
+        this.articleSubscription = this.dataPreloaderService.articleChange
             .asObservable()
             .subscribe((article) => {
                 this.article = article;
             });
-    }
-
-    private async initArticle() {
-        await this.articleService.getArticleByIdFromUrlParams();
     }
 }
 

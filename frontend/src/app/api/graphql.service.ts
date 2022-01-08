@@ -71,7 +71,8 @@ export class GraphQLService {
                         'id title authorFirstName authorLastName createDate publishDate summary content categories { id title tag }',
                         null,
                         null),
-                    this.createRequestOptions());
+                    this.createRequestOptions())
+                .toPromise();
         }
     }
 
