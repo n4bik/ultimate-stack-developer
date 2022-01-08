@@ -19,15 +19,18 @@ export class ArticleService {
     }
 
     public getArticleById() {
-        this.route.queryParams.subscribe((params) => {
-            this.graphQlService
+        let selectedArticle;
+        this.route.queryParams.subscribe(async (params) => {
+            await this.graphQlService
                 .getArticleById(params.articleId)
                 .toPromise()
                 .then((response: ResponseModel) => {
-                    const selectedArticle = new Article().deserialize(response.data.findArticleById);
+                    selectedArticle = new Article().deserialize(response.data.findArticleById);
                     this.selectedArticleChange.next(selectedArticle);
                 });
         }).unsubscribe();
+
+        return selectedArticle;
     }
 
     public getArticlesByCategoryId() {
@@ -47,6 +50,8 @@ export class ArticleService {
                         });
                 });
         }).unsubscribe();
+
+        return this.articleList;
     }
 
     public createNewArticle(newArticleTitle: string) {

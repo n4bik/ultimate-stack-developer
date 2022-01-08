@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Article} from '../../common/models/article.model';
 import {DataPreloaderService} from '../../common/data-preloader.service';
 import {Router} from '@angular/router';
+import {ArticleService} from '../../common/article.service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-article-list',
@@ -12,14 +14,24 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     subtitleContent = 'Please select article';
 
     constructor(private router: Router,
-                private dataPreloaderService: DataPreloaderService) {
+                private dataPreloaderService: DataPreloaderService,
+                private articleService: ArticleService,
+                private cookieService: CookieService) {
     }
 
     ngOnInit(): void {
-        if (!this.dataPreloaderService.isLoaded) {
+        const tokenCookie = this.cookieService.get('token');
+        const tokenExpectedCharCount = 179;
+
+        if (tokenCookie === '' || tokenCookie.length !== tokenExpectedCharCount) {
             this.router.navigate(['/']);
         }
-        this.initArticleList();
+
+        if (!this.dataPreloaderService.isLoaded) {
+            this.dataPreloaderService.loadData().then(() => this.initArticleList());
+        } else {
+            this.initArticleList();
+        }
     }
 
     ngOnDestroy(): void {
@@ -27,6 +39,6 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     }
 
     private initArticleList() {
-        this.articleList = this.dataPreloaderService.getArticlesByCategoryId();
+        this.articleList = this.articleService.getArticlesByCategoryId();
     }
 }
